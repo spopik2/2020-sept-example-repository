@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "WebGrid Demo";
+    //to recieve the data from another page via the GETHTML()
+    // you will use Request.QueryString["label"]
+    // IF the "label" does not exist as the page is retrieved
+    //   then the returned value of .QueryString is null
+    var incomingDataValue = Request.QueryString["cid"];
+    if (string.IsNullOrEmpty(incomingDataValue))
+    {
+        Response.Redirect("MultiRecordQuery.cshtml");
+    }
+
+    var db = Database.Open("NWD");
+    var productquery = @"Select ProductID, ProductName, UnitPrice, QuantityPerUnit, Discontinued
+        From Products
+        Where CategoryID = @0";
+    var results = db.Query(productquery, incomingDataValue);
+
+    // retrieve the categoryname for the passed data
+    //(yes the name could have passed as a prameter
+    //      from the previous page>
+    //demo of using .QueryValue()
+    //.Quervalue returns a single value (not a reord)
+
+    var getcategoryname = @"Select CategoryName
+            from Categories
+            Where CategoryID = @0";
+    var categoryname = db.QueryValue(getcategoryname, incomingDataValue);
+    if (string.IsNullOrEmpty(categoryname))
+    {
+        categoryname = "Unknown";
+    }
+
+    // create an instance of the WebGrid
+    // notice the collection (results) is passed at the time
+    //   of instantiation
+    // to set your page size (rows per page) you need to do this on the 
+    // new command NOT within the GETHTML()
+
+    var gridinstance = new WebGrid(results,rowsPerPage:3);
+}
+@section banner {<h3>Web Grid Demo: Using Passed Data</h3>}
+
+<div class="row">
+    <h5>Category: @categoryname</h5>
+</div>
+<div class="row">
+    <div class="offset-1 col-10">
+        @* customize the grid appearance  *@
+        @gridinstance.GetHtml(
+       tableStyle: "table table-striped table-bordered table-hover",
+       mode:WebGridPagerModes.All,
+       firstText: "Start",
+       lastText: "End",
+        columns: gridinstance.Columns(
+              gridinstance.Column(columnName: "ProductID", header: "ID"),
+              gridinstance.Column(columnName: "ProductName", header: "Product"),
+              gridinstance.Column(columnName: "QuantityPerUnit", header: "Pkg"),
+              gridinstance.Column(columnName: "UnitPrice", header: "$",
+                    format:(item) => item.UnitPrice.ToString("0.00")),
+              gridinstance.Column(columnName: "Discontinued", header: "Disc",
+                    format: @<input name="Discontinued" type="checkbox"
+                                   value="@item.Discontinued"
+                                    @(item.Discontinued == true ? "Checked" : null)
+                                        disabled="disabled"/>),
+            //this column will be used to hold an achor tag to send the
+            // the user to another page along with data off the selected row
+            // the onclick event is doing a confirmation of executing the event 
+            gridinstance.Column(header: "",
+                    format:@<text>
+                            <a href="~/SamplePages/WebGridDestination.cshtml?pid=@item.ProductID"
+                               onclick="return confirm('Are you sure you wish to view @item.ProductName?')">View</a>
+                            </text>)
+            ))
+    </div>
+</div>

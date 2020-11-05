@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "DropDownlist";
+}
+@section banner {<h3>Form Using Select (DropDownList)</h3>}
+
+@if(IsPost)
+{
+    var choice = Request.Form["CodingSamples"];
+    switch (choice.ToUpper())
+    {
+        case "TEXT":
+            {
+                //to go to another page without using an anchor tag
+                //use Response.Redirect(xxxxxxx.cshtml)
+                Response.Redirect("~/SamplePages/TextBox.cshtml");
+                break;
+            }
+        case "RADIO":
+            {
+                Response.Redirect("RadioButtons.cshtml");
+                break;
+            }
+        case "CHECKED":
+            {
+                Response.Redirect("~/SamplePages/CheckBoxes.cshtml");
+                break;
+            }
+    }
+}
+else
+{
+
+}
+
+<form id="theForm" method="post">
+    <div class="offset-1">
+        <label for="CodingSamples">Select the sample to view</label><br/>
+        @* a single select is created using the option tag
+            the tag has a parameter called value
+            the display text is coded between the opening and closing option tag
+
+
+            dropdownlist may contain a prompt line as the first row*@
+        <select id="CodingSamples" name="CodingSamples">
+            <option value="">Select...</option>
+            <option value="Text">TextBoxes</option>
+            <option value="Radio">RadioButtons</option>
+            <option value="Check">CheckBoxes</option>
+        </select><br/><br/>
+        <button type="submit" name="theButton" id="theButton" value="submit" class="btn btn-info">Submit</button>
+    </div>
+</form>
+

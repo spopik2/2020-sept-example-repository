@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Bootstrap Formatting";
+}
+
+@section banner {<h3>Exploring Bootstrap to Format page</h3>}
+
+<blockquote>
+    Bootstrap is a css style sheet created as open source. It contains about 10,00 lines of css code.
+    Using various aspects of this style sheet can allot us to quickly via classes block fotmat out web page.
+    It will also allow for text alignment, setting up nicely formatted grid displays, create color buttons, banner,
+    etc. Alert allows for color blocking an area plus ither stuff. 4 basic colors can be obtainsed
+    by using alert-success, alert-info, alert-warning and alert-danger.
+    Default block alignment is left. You can change that using text-xxxxxx where xxxxxx is left, right or center
+    <br/><br/>
+    WARNING: Bootstrap is open-sourse third-party and is subject to change. Thus items that were once available may not be available in the future. For bootstrap, if you wish to override a class, it is best to code you own stylesheet and not alter the NuGet package of bootstrap.
+</blockquote>
+<div class="row">
+    <div class="col-md-1">
+        @* requested the 1st 4 blocks of the row *@
+        <div class="alert alert-success">
+            Left text content
+        </div>
+    </div>
+    <div class="col-md-3 text-md-center text-capitalize text-dark">
+        @* requested the next 3 blocks of the row *@
+        <div>
+            Center text content
+        </div>
+    </div>
+    <div class="col-md-5 text-right">
+        @* requested the last 5 blocks of the row *@
+        <div class="alert alert-danger">
+            Right text content
+        </div>
+    </div>
+</div>
+<div class="row">
+    <button type="submit" name="theButton" value="submit" class="btn btn-primary">Primary</button>&nbsp;&nbsp;
+    <button type="submit" name="theButton" value="submit" class="btn btn-light">light</button>&nbsp;&nbsp;
+    <button type="submit" name="theButton" value="submit" class="btn btn-dark">dark</button>&nbsp;&nbsp;
+    <button type="submit" name="theButton" value="submit" class="btn btn-outline-danger">outline danger</button>&nbsp;&nbsp;
+</div>
+

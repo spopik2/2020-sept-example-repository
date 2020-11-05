@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    //this is a C# comment
+    //settting the page title changes your
+    // tab on the browser
+    Page.Title = "Hello World";
+}
+@section banner{<h1>Hello World</h1>}
+<div>
+    @* This is an html comment
+        this html code will be placed
+        in the RenderBody() of the layout page*@
+    <blockquote>
+        This is my first Layout/Context page
+    </blockquote>
+    <p>
+        We are starting to learn about Forms and Razor
+        Web pages. The layout page contains the structural layout of the web page.
+        The context page contains the content that appears in the &lt; Body &gt; tag.
+    </p>
+</div>
+<div>
+    @section foot{&copy; CPSC1517 Nait Sept 2020}
+</div>
+
+

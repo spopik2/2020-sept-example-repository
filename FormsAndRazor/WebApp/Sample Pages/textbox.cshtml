@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "textbox sample";
+    string enterdata = "";
+}
+@if (IsPost)
+{
+    enterdata = Request.Form["cscodingname"];
+    var name = Request.Form["cscodingname"];
+    var email = Request.Form["Emaill"];
+    var thebutton = Request.Form["PressMe"];
+    if (thebutton.Equals("name"))
+    {
+        enterdata = name;
+    }
+    else
+    {
+        enterdata = email;
+    }
+}
+
+
+else
+{
+    enterdata = "you have requested this page for the 1st time";
+}
+@section banner {<h3>Form using textbox</h3>}
+<div>
+    <form id="theForm" method="post">
+        <table>
+            <tr>
+                <td>Enter your name:</td>
+                <td><input type="text" id="javascriptname" name="cscodingname"</td>
+
+            </tr>
+            <tr>
+                <td>Enter your email:</td>
+                <td><input type="Email" id="email" name="Email"</td>
+            </tr>
+            <tr>
+                <td colspan="2"><label ="@enterdata"></label></td>                                
+            </tr>
+        </table>
+    </form>
+</div>
